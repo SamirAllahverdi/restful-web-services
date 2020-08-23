@@ -39,16 +39,11 @@ public class UserService {
         return repo.findById(id);
     }
 
-    public User deleteById(int id) {
-        Iterator<User> iterator = users.iterator();
-        while (iterator.hasNext()) {
-            User user = iterator.next();
-            if (user.getId() == id) {
-                iterator.remove();
-                return user;
-            }
-        }
-        return null;
+    public boolean exists(int id) {
+        return repo.existsById(id);
+    }
+    public void deleteById(int id) {
+         repo.deleteById(id);
     }
 
 }

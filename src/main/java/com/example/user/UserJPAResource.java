@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import com.example.exception.UserNotFoundException;
 import com.example.model.User;
+import com.example.repository.PostRepository;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
