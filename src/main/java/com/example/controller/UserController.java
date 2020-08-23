@@ -10,9 +10,8 @@ import javax.validation.Valid;
 
 import com.example.model.User;
 import com.example.service.UserService;
-import com.example.user.UserNotFoundException;
+import com.example.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -37,11 +36,9 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public EntityModel<User> retrieveUser(@PathVariable int id) {
-        User user = service.findOne(id);
 
-        if (user == null)
-            throw new UserNotFoundException("id-" + id);
 
+        User user = service.findOne(id).orElseThrow(() -> new UserNotFoundException("id = " + id));
 
         //"all-users", SERVER_PATH + "/users"
         //retrieveAllUsers
@@ -74,8 +71,6 @@ public class UserController {
     @PostMapping("/users")
     public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
         User savedUser = service.save(user);
-        // CREATED
-        // /user/{id}     savedUser.getId()
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
