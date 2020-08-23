@@ -41,18 +41,13 @@ public class UserJPAResource {
 
 	@GetMapping("/jpa/users/{id}")
 	public EntityModel<User> retrieveUser(@PathVariable int id) {
-		Optional<User> user = userRepository.findById(id);
+		User user = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("id - " + id));
 
-		if (!user.isPresent())
-			throw new UserNotFoundException("id-" + id);
-
-		EntityModel<User> resource = new EntityModel<>(user.get());//new EntityModel<User>(user.get());
+		EntityModel<User> resource = new EntityModel<>(user);
 
 		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
 
 		resource.add(linkTo.withRel("all-users"));
-
-		// HATEOAS
 
 		return resource;
 	}
