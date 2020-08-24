@@ -15,10 +15,5 @@ public class RestApp {
 		SpringApplication.run(RestApp.class, args);
 	}
 	
-	@Bean
-	public LocaleResolver localeResolver() {
-		AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
-		localeResolver.setDefaultLocale(Locale.US);
-		return localeResolver;
-	}
+
 }

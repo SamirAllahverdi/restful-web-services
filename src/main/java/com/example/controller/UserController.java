@@ -37,19 +37,12 @@ public class UserController {
     @GetMapping("/users/{id}")
     public EntityModel<User> retrieveUser(@PathVariable int id) {
 
-
         User user = service.findOne(id).orElseThrow(() -> new UserNotFoundException("id = " + id));
 
-        //"all-users", SERVER_PATH + "/users"
-        //retrieveAllUsers
-        EntityModel<User> resource = new EntityModel<>(user);
-
-        WebMvcLinkBuilder linkTo =
-                linkTo(methodOn(this.getClass()).retrieveAllUsers());
-
-        resource.add(linkTo.withRel("all-users"));
-
         //HATEOAS
+        EntityModel<User> resource = new EntityModel<>(user);
+        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+        resource.add(linkTo.withRel("all-users"));
 
         return resource;
     }
@@ -57,12 +50,8 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable int id) {
 
-        if (service.exists(id)) {
-            service.deleteById(id);
-        } else {
-            throw new UserNotFoundException("id = " + id);
-        }
-
+        if (service.exists(id)) service.deleteById(id);
+        else throw new UserNotFoundException("id = " + id);
 
     }
 
