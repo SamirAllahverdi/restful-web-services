@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@ApiModel(description = "All details about the user.")
+@ApiModel(description = "All details about the user")
 @Entity(name = "users")
 @Data
 @NoArgsConstructor
@@ -24,8 +24,8 @@ public class User {
     @GeneratedValue
     private Integer id;
 
-    @Size(min = 2, message = "Name should have atleast 2 characters")
-    @ApiModelProperty(notes = "Name should have atleast 2 characters")
+    @Size(min = 2, message = "Name should have at least 2 characters")
+    @ApiModelProperty(notes = "Name should have at least 2 characters")
     private String name;
 
     @Past
