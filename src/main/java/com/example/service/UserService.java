@@ -13,24 +13,13 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserService {
 
-    private static List<User> users = new ArrayList<>();
     private final UserRepository repo;
-    private static int usersCount = 3;
-
-    static {
-        users.add(new User(1, "Adam", new Date()));
-        users.add(new User(2, "Eve", new Date()));
-        users.add(new User(3, "Jack", new Date()));
-    }
 
     public List<User> findAll() {
         return repo.findAll();
     }
 
     public User save(User user) {
-//        if (user.getId() == null) {
-//            user.setId(++usersCount);
-//        }
         repo.save(user);
         return user;
     }

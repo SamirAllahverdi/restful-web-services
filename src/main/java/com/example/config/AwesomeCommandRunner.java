@@ -21,13 +21,13 @@ public class AwesomeCommandRunner {
     @Bean
     public CommandLineRunner autoRun() {
         return args -> {
+
             Post post = new Post(1, "car");
             Post post2 = new Post(2, "book");
-
-            Post post3 = new Post(8, "home");
+            Post post3 = new Post(3, "home");
 
             userRepo.save(new User(1, "Adam", new Date(), new HashSet<>(Arrays.asList(post,post2))));
-            userRepo.save(new User(2, "Eve", new Date(),new HashSet<>(Arrays.asList(post3))));
+            userRepo.save(new User(2, "Eve", new Date(),new HashSet<>(Collections.singletonList(post3))));
             userRepo.save(new User(3, "Jack", new Date()));
         };
     }
