@@ -1,5 +1,6 @@
 package com.example.model;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Size(min = 2, message = "Name should have at least 2 characters")
@@ -32,12 +33,18 @@ public class User {
     @ApiModelProperty(notes = "Birth date should be in the past")
     private Date birthDate;
 
-    @OneToMany(mappedBy = "user")
-    private List<Post> posts;
+
 
     public User(int id, String name, Date birthDate) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
     }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_post",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")}
+    )
+    Collection<Post> posts;
 }

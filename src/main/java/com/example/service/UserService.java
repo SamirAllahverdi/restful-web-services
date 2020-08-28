@@ -24,14 +24,14 @@ public class UserService {
     }
 
     public List<User> findAll() {
-        return users;
+        return repo.findAll();
     }
 
     public User save(User user) {
-        if (user.getId() == null) {
-            user.setId(++usersCount);
-        }
-        users.add(user);
+//        if (user.getId() == null) {
+//            user.setId(++usersCount);
+//        }
+        repo.save(user);
         return user;
     }
 
@@ -42,6 +42,7 @@ public class UserService {
     public boolean exists(int id) {
         return repo.existsById(id);
     }
+
     public void deleteById(int id) {
          repo.deleteById(id);
     }
